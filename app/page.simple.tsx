@@ -4,13 +4,20 @@ import { useState, useRef, useEffect } from 'react';
 import { Box, Button, Flex, Icon, Input, Text, useColorModeValue } from '@chakra-ui/react';
 import { MdAutoAwesome, MdPerson } from 'react-icons/md';
 
+// Define message type for TypeScript
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 // Simple page that doesn't use ReactMarkdown
 export default function Page() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   
-  const messagesEndRef = useRef(null);
+  // Fix the type of messagesEndRef
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   
   // Colors
   const textColor = useColorModeValue('navy.700', 'white');
@@ -141,7 +148,7 @@ export default function Page() {
         <Input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSubmit()}
+          onKeyDown={(e) => e.key === 'Enter' && !isLoading && handleSubmit()}
           placeholder="Shkruaj mesazhin tënd..."
           size="lg"
           borderRadius="full"

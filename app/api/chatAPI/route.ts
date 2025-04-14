@@ -1,44 +1,53 @@
+import { Configuration, OpenAIApi } from 'openai-edge';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { ChatBody } from '@/types/types';
-import { OpenAIStream } from '@/utils/chatStream';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
+const apiConfig = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY || '',
+});
 
-export async function GET(req: Request): Promise<Response> {
-  try {
-    const { inputCode, model, apiKey, systemMessage, conversationHistory } = (await req.json()) as ChatBody;
+const openai = new OpenAIApi(apiConfig);
 
-    let apiKeyFinal;
-    if (apiKey) {
-      apiKeyFinal = apiKey;
-    } else {
-      apiKeyFinal = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
-    }
-
-    const stream = await OpenAIStream(inputCode, model, apiKeyFinal, systemMessage, conversationHistory);
-
-    return new Response(stream);
-  } catch (error) {
-    console.error(error);
-    return new Response('Error', { status: 500 });
-  }
+export async function GET(req: NextRequest, res: NextResponse) {
+  return new Response('OK');
 }
 
-export async function POST(req: Request): Promise<Response> {
+export async function POST(req: NextRequest) {
   try {
-    const { inputCode, model, apiKey, systemMessage, conversationHistory } = (await req.json()) as ChatBody;
+    const body: ChatBody = await req.json();
+    const { model, messages, apiKey, maxTokens, temperature } = body;
 
-    let apiKeyFinal;
-    if (apiKey) {
-      apiKeyFinal = apiKey;
-    } else {
-      apiKeyFinal = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
+    // Use the provided API key or default to environment variable
+    const apiKeyCfg = new Configuration({
+      apiKey: apiKey || process.env.OPENAI_API_KEY || '',
+    });
+    const openaiWithApiKey = new OpenAIApi(apiKeyCfg);
+
+    // Validate the API key
+    if (!apiKeyCfg.apiKey) {
+      return new Response(
+        'Missing API key. Provide it as an environment variable or in the request.',
+        { status: 400 }
+      );
     }
 
-    const stream = await OpenAIStream(inputCode, model, apiKeyFinal, systemMessage, conversationHistory);
+    // Create chat completion
+    const response = await openaiWithApiKey.createChatCompletion({
+      model: model || 'gpt-3.5-turbo',
+      messages: messages,
+      max_tokens: maxTokens || 1000,
+      temperature: temperature || 0.7,
+      stream: true,
+    });
 
-    return new Response(stream);
-  } catch (error) {
-    console.error(error);
-    return new Response('Error', { status: 500 });
+    // Create stream response
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(stream);
+  } catch (error: any) {
+    console.error('Error in ChatAPI route:', error);
+    return new Response('Error processing your request: ' + error.message, {
+      status: 500,
+    });
   }
 }
