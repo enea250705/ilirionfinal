@@ -9,6 +9,8 @@ import {
   Flex,
   Link,
   useColorModeValue,
+  Text,
+  Image,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import AdminNavbarLinks from './NavbarLinksAdmin';
@@ -34,15 +36,15 @@ export default function AdminNavbar(props: {
   const { secondary, brandText, setApiKey } = props;
 
   // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
-  let mainText = useColorModeValue('navy.700', 'white');
+  let mainText = useColorModeValue('brand.500', 'white');
   let secondaryText = useColorModeValue('gray.700', 'white');
   let navbarPosition = 'fixed' as const;
   let navbarFilter = 'none';
   let navbarBackdrop = 'blur(20px)';
   let navbarShadow = 'none';
   let navbarBg = useColorModeValue(
-    'rgba(244, 247, 254, 0.2)',
-    'rgba(11,20,55,0.5)',
+    'rgba(255, 239, 239, 0.8)',
+    'rgba(0, 0, 0, 0.5)',
   );
   let navbarBorder = 'transparent';
   let secondaryMargin = '0px';
@@ -109,41 +111,67 @@ export default function AdminNavbar(props: {
         alignItems={{ xl: 'center' }}
         mb={gap}
       >
-        <Box mb={{ base: '8px', md: '0px' }}>
-          <Breadcrumb>
-            <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
-              <BreadcrumbLink href="#" color={secondaryText}>
-                Pages
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-
-            <BreadcrumbItem color={secondaryText} fontSize="sm">
-              <BreadcrumbLink href="#" color={secondaryText}>
-                {brandText}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </Breadcrumb>
-          {/* Here we create navbar brand, based on route name */}
-          <Link
-            color={mainText}
-            href="#"
-            bg="inherit"
-            borderRadius="inherit"
-            fontWeight="bold"
-            fontSize="34px"
-            p="0px"
-            _hover={{ color: { mainText } }}
-            _active={{
-              bg: 'inherit',
-              transform: 'none',
-              borderColor: 'transparent',
-            }}
-            _focus={{
-              boxShadow: 'none',
-            }}
+        <Box mb={{ base: '8px', md: '0px' }} display="flex" alignItems="center">
+          {/* Albanian Flag Style Icon */}
+          <Flex 
+            w="30px" 
+            h="30px" 
+            bg="brand.500" 
+            mr="10px"
+            borderRadius="5px"
+            alignItems="center"
+            justifyContent="center"
+            position="relative"
+            overflow="hidden"
           >
-            {brandText}
-          </Link>
+            <Box 
+              position="absolute"
+              w="20px"
+              h="20px"
+              color="black"
+            >
+              <Text fontSize="18px" fontWeight="bold" textAlign="center">
+                🦅
+              </Text>
+            </Box>
+          </Flex>
+          
+          <Box>
+            <Breadcrumb>
+              <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
+                <BreadcrumbLink href="#" color={secondaryText}>
+                  Faqet
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+
+              <BreadcrumbItem color={secondaryText} fontSize="sm">
+                <BreadcrumbLink href="#" color={secondaryText}>
+                  {brandText}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+            {/* Here we create navbar brand, based on route name */}
+            <Link
+              color={mainText}
+              href="#"
+              bg="inherit"
+              borderRadius="inherit"
+              fontWeight="bold"
+              fontSize="34px"
+              p="0px"
+              _hover={{ color: { mainText } }}
+              _active={{
+                bg: 'inherit',
+                transform: 'none',
+                borderColor: 'transparent',
+              }}
+              _focus={{
+                boxShadow: 'none',
+              }}
+            >
+              Ilirion AI
+            </Link>
+          </Box>
         </Box>
         <Box ms="auto" w={{ sm: '100%', md: 'unset' }}>
           <AdminNavbarLinks setApiKey={setApiKey} secondary={props.secondary} />

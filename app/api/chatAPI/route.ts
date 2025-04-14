@@ -5,7 +5,7 @@ export const runtime = 'edge';
 
 export async function GET(req: Request): Promise<Response> {
   try {
-    const { inputCode, model, apiKey } = (await req.json()) as ChatBody;
+    const { inputCode, model, apiKey, systemMessage, conversationHistory } = (await req.json()) as ChatBody;
 
     let apiKeyFinal;
     if (apiKey) {
@@ -14,7 +14,7 @@ export async function GET(req: Request): Promise<Response> {
       apiKeyFinal = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
     }
 
-    const stream = await OpenAIStream(inputCode, model, apiKeyFinal);
+    const stream = await OpenAIStream(inputCode, model, apiKeyFinal, systemMessage, conversationHistory);
 
     return new Response(stream);
   } catch (error) {
@@ -25,7 +25,7 @@ export async function GET(req: Request): Promise<Response> {
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const { inputCode, model, apiKey } = (await req.json()) as ChatBody;
+    const { inputCode, model, apiKey, systemMessage, conversationHistory } = (await req.json()) as ChatBody;
 
     let apiKeyFinal;
     if (apiKey) {
@@ -34,7 +34,7 @@ export async function POST(req: Request): Promise<Response> {
       apiKeyFinal = process.env.NEXT_PUBLIC_OPENAI_API_KEY;
     }
 
-    const stream = await OpenAIStream(inputCode, model, apiKeyFinal);
+    const stream = await OpenAIStream(inputCode, model, apiKeyFinal, systemMessage, conversationHistory);
 
     return new Response(stream);
   } catch (error) {

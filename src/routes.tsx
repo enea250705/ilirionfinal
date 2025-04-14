@@ -6,6 +6,7 @@ import {
   MdLayers,
   MdAutoAwesome,
   MdOutlineManageAccounts,
+  MdImage,
 } from 'react-icons/md';
 import { IoMdPerson } from 'react-icons/io';
 import { LuHistory } from 'react-icons/lu';
@@ -16,7 +17,7 @@ import { IRoute } from './types/navigation';
 
 const routes: IRoute[] = [
   {
-    name: 'Chat UI',
+    name: 'Bisedë me Ilirion',
     path: '/',
     icon: (
       <Icon as={MdAutoAwesome} width="20px" height="20px" color="inherit" />
@@ -24,14 +25,20 @@ const routes: IRoute[] = [
     collapse: false,
   },
   {
-    name: 'All Templates',
+    name: 'Gjenerimi i Imazheve',
+    path: '/image-generation',
+    icon: <Icon as={MdImage} width="20px" height="20px" color="inherit" />,
+    collapse: false,
+  },
+  {
+    name: 'Të gjitha Shabllonet',
     disabled: true,
     path: '/all-templates',
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     collapse: false,
   },
   {
-    name: 'My Projects',
+    name: 'Projektet e Mia',
     disabled: true,
     path: '/my-projects',
     icon: <Icon as={MdLayers} width="20px" height="20px" color="inherit" />,
@@ -39,24 +46,24 @@ const routes: IRoute[] = [
   },
   // --- Others ---
   {
-    name: 'Other Pages',
+    name: 'Faqe të Tjera',
     disabled: true,
     path: '/others',
     icon: <Icon as={MdFileCopy} width="20px" height="20px" color="inherit" />,
     collapse: true,
     items: [
       {
-        name: 'Prompt Page',
+        name: 'Faqja e Promptit',
         layout: '/others',
         path: '/prompt',
       },
       {
-        name: 'Register',
+        name: 'Regjistrim',
         layout: '/others',
         path: '/register',
       },
       {
-        name: 'Sign In',
+        name: 'Hyrje',
         layout: '/others',
         path: '/sign-in',
       },
@@ -64,36 +71,36 @@ const routes: IRoute[] = [
   },
   // --- Admin Pages ---
   {
-    name: 'Admin Pages',
+    name: 'Faqet e Adminit',
     disabled: true,
     path: '/admin',
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     collapse: true,
     items: [
       {
-        name: 'All Templates',
+        name: 'Të gjitha Shabllonet',
         layout: '/admin',
         path: '/all-admin-templates',
       },
       {
-        name: 'New Template',
+        name: 'Shabllon i Ri',
         layout: '/admin',
         path: '/new-template',
       },
       {
-        name: 'Edit Template',
+        name: 'Modifiko Shabllon',
         layout: '/admin',
         path: '/edit-template',
       },
       {
-        name: 'Users Overview',
+        name: 'Përmbledhje e Përdoruesve',
         layout: '/admin',
         path: '/overview',
       },
     ],
   },
   {
-    name: 'Profile Settings',
+    name: 'Cilësimet e Profilit',
     disabled: true,
     path: '/settings',
     icon: (

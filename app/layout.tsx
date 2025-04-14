@@ -1,12 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
-import type { AppProps } from 'next/app';
-import { ChakraProvider, Box, Portal, useDisclosure } from '@chakra-ui/react';
-import theme from '@/theme/theme';
-import routes from '@/routes';
-import Sidebar from '@/components/sidebar/Sidebar';
+import { Box, Portal, useDisclosure } from '@chakra-ui/react';
 import Footer from '@/components/footer/FooterAdmin';
-import Navbar from '@/components/navbar/NavbarAdmin';
 import { getActiveRoute, getActiveNavbar } from '@/utils/navigation';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -22,57 +17,45 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     const initialKey = localStorage.getItem('apiKey');
-    console.log(initialKey);
     if (initialKey?.includes('sk-') && apiKey !== initialKey) {
       setApiKey(initialKey);
     }
   }, [apiKey]);
 
   return (
-    <html lang="en">
+    <html lang="sq">
+      <head>
+        <title>Ilirion AI - Asistenti inteligjent shqiptar me DeepSeek, xAI Grok dhe Groq Llama 3</title>
+        <meta name="description" content="Ilirion AI - Asistenti i parë artificial inteligjent shqiptar i fuqizuar nga teknologjitë DeepSeek, xAI Grok dhe Groq Llama 3" />
+        <meta charSet="utf-8" />
+      </head>
       <body id={'root'}>
         <AppWrappers>
-          {/* <ChakraProvider theme={theme}> */}
           {pathname?.includes('register') || pathname?.includes('sign-in') ? (
             children
           ) : (
             <Box>
-              <Sidebar setApiKey={setApiKey} routes={routes} />
               <Box
-                pt={{ base: '60px', md: '100px' }}
-                float="right"
+                pt={{ base: '20px', md: '30px' }}
                 minHeight="100vh"
                 height="100%"
                 overflow="auto"
                 position="relative"
                 maxHeight="100%"
-                w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-                maxWidth={{ base: '100%', xl: 'calc( 100% - 290px )' }}
+                w="100%"
+                maxWidth="100%"
                 transition="all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
                 transitionDuration=".2s, .2s, .35s"
                 transitionProperty="top, bottom, width"
                 transitionTimingFunction="linear, linear, ease"
               >
-                <Portal>
-                  <Box>
-                    <Navbar
-                      setApiKey={setApiKey}
-                      onOpen={onOpen}
-                      logoText={'Horizon UI Dashboard PRO'}
-                      brandText={getActiveRoute(routes, pathname)}
-                      secondary={getActiveNavbar(routes, pathname)}
-                    />
-                  </Box>
-                </Portal>
                 <Box
                   mx="auto"
                   p={{ base: '20px', md: '30px' }}
                   pe="20px"
                   minH="100vh"
-                  pt="50px"
                 >
                   {children}
-                  {/* <Component apiKeyApp={apiKey} {...pageProps} /> */}
                 </Box>
                 <Box>
                   <Footer />
@@ -80,7 +63,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </Box>
             </Box>
           )}
-          {/* </ChakraProvider> */}
         </AppWrappers>
       </body>
     </html>

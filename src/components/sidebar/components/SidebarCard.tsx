@@ -5,11 +5,12 @@ import {
   Img,
   Text,
   useColorModeValue,
+  Box,
 } from '@chakra-ui/react';
 import logoWhite from '../../../../public/img/layout/logoWhite.png';
 
 export default function SidebarDocs() {
-  const bgColor = 'linear-gradient(135deg, #868CFF 0%, #4318FF 100%)';
+  const bgColor = 'linear-gradient(135deg, #E41E20 0%, #C41416 100%)';
   const borderColor = useColorModeValue('white', 'navy.800');
 
   return (
@@ -24,7 +25,7 @@ export default function SidebarDocs() {
       <Flex
         border="5px solid"
         borderColor={borderColor}
-        bg="linear-gradient(135deg, #868CFF 0%, #4318FF 100%)"
+        bg="linear-gradient(135deg, #E41E20 0%, #000000 100%)"
         borderRadius="50%"
         w="80px"
         h="80px"
@@ -36,7 +37,9 @@ export default function SidebarDocs() {
         top="-47px"
         transform="translate(-50%, 0%)"
       >
-        <Img src={logoWhite.src} w="40px" h="40px" />
+        <Text fontSize="30px" fontWeight="bold" color="white">
+          🦅
+        </Text>
       </Flex>
       <Flex
         direction="column"
@@ -54,29 +57,26 @@ export default function SidebarDocs() {
           textAlign="center"
           mb="14px"
         >
-          Go unlimited with PRO
+          Ilirion AI - Shqip
         </Text>
         <Text fontSize="14px" color={'white'} mb="14px" textAlign="center">
-          Get your AI Project to another level and start doing more with Horizon
-          AI Template PRO!
+          Asistenti i parë artificial inteligjent shqiptar, i fuqizuar nga teknologjitë DeepSeek, xAI Grok, dhe Groq Llama 3.
         </Text>
       </Flex>
-      <Link href="https://horizon-ui.com/ai-template" isExternal>
-        <Button
-          bg="whiteAlpha.300"
-          _hover={{ bg: 'whiteAlpha.200' }}
-          _active={{ bg: 'whiteAlpha.100' }}
-          mb={{ sm: '16px', xl: '24px' }}
-          color={'white'}
-          fontWeight="regular"
-          fontSize="sm"
-          minW="185px"
-          mx="auto"
-          borderRadius="45px"
-        >
-          Get started with PRO
-        </Button>
-      </Link>
+      <Button
+        bg="whiteAlpha.300"
+        _hover={{ bg: 'whiteAlpha.200' }}
+        _active={{ bg: 'whiteAlpha.100' }}
+        mb={{ sm: '16px', xl: '24px' }}
+        color={'white'}
+        fontWeight="regular"
+        fontSize="sm"
+        minW="185px"
+        mx="auto"
+        borderRadius="45px"
+      >
+        Krejtësisht Falas
+      </Button>
     </Flex>
   );
 }
