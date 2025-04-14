@@ -118,7 +118,15 @@ const questionNeedsResearch = (text: string): boolean => {
   return factualPatterns.some(pattern => pattern.test(text));
 };
 
-export default function Chat(props: { apiKeyApp: string }) {
+// Export a simple server component as the default export
+export default function Page() {
+  return (
+    <ChatComponent apiKeyApp="" />
+  );
+}
+
+// Create the client component that contains all the existing code
+function ChatComponent(props: { apiKeyApp: string }) {
   // Input States
   const [inputOnSubmit, setInputOnSubmit] = useState<string>('');
   const [inputCode, setInputCode] = useState<string>('');
