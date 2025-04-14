@@ -95,3 +95,76 @@ Connect with the community! Feel free to ask questions, report issues, and meet 
 ⭐️ [Copyright 2023 Horizon UI ](https://www.horizon-ui.com/?ref=readme-horizon-ai-template-free)
 
 📄 [Horizon UI License](https://horizon-ui.notion.site/End-User-License-Agreement-8fb09441ea8c4c08b60c37996195a6d5)
+
+## Ilirion AI - Albanian Language Chat Interface
+
+Built on the Horizon UI Template Pro framework and powered by advanced language models, Ilirion AI provides a modern, responsive chat interface optimized for the Albanian language.
+
+## Quick Start
+
+Follow these simple steps to get started with Ilirion AI:
+
+1. Clone the repository 
+```bash
+git clone https://github.com/enea250705/ilirionfinal.git
+cd ilirionfinal
+```
+
+2. Install dependencies
+```bash
+npm install
+```  
+
+3. Set up environment variables
+```bash
+cp .env.example .env.local
+```
+Edit `.env.local` and add your API keys:
+- `OPENAI_API_KEY` - Get from [OpenAI](https://platform.openai.com/account/api-keys)
+- `SERPAPI_KEY` - Get from [SerpAPI](https://serpapi.com/)
+- `DEEPSEEK_API_KEY` - Get from [DeepSeek](https://platform.deepseek.ai/)
+- And others as needed
+
+4. Run the development server
+```bash
+npm run dev
+```
+
+Visit http://localhost:3000 to view the application
+
+## Deploy on Vercel
+
+The easiest way to deploy Ilirion AI is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js).
+
+1. Create a Vercel account if you don't have one
+2. Connect your GitHub repository to Vercel
+3. Set up all the environment variables (API keys) in Vercel's dashboard
+4. Deploy
+
+## Features
+
+- **Albanian Language Detection**: Automatically detects and processes Albanian text
+- **Research Mode**: Searches the web for current information to enhance responses
+- **Conversation Management**: Save and manage multiple conversations
+- **Modern UI**: Clean, responsive interface for all devices
+- **Custom Themes**: Light and dark mode support
+
+## Albanian Language Support
+
+The interface has been fully localized for Albanian users:
+- Albanian language detection
+- Albanian language responses
+- Albanian placeholders and button text
+- Research focused on Albanian language sources
+
+## License
+
+[MIT](LICENSE)
+
+## Credits
+
+Ilirion AI is built on top of the [Horizon UI Template Pro](https://horizon-ui.com/) framework.
+
+## Contact
+
+For any questions or support, please contact [your contact information].
