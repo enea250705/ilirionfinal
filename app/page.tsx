@@ -1,11 +1,3 @@
-// This is a server component
-export default function Page() {
-  return (
-    <ClientPage />
-  );
-}
-
-// All client-side code is moved to this component
 'use client';
 /*eslint-disable*/
 // @ts-ignore - Disable type checking for icon types in this file
@@ -36,6 +28,13 @@ import { MdAutoAwesome, MdBolt, MdEdit, MdPerson, MdMenu, MdClose } from 'react-
 import Bg from '../public/img/chat/bg-image.png';
 // Import trending topic type
 import type { TrendingTopic } from '@/types/types';
+
+// This is a server component wrapper
+export default function Page() {
+  return (
+    <ClientPage />
+  );
+}
 
 // Function to detect if text is in Albanian
 const isAlbanian = (text: string): boolean => {
