@@ -11,10 +11,10 @@ declare module 'react-icons' {
   }
 }
 
-// Add this declaration to fix the specific error in Chakra UI
+// This declaration overrides Chakra UI's Icon component typings 
+// to accept react-icons without type issues
 declare module '@chakra-ui/react' {
   interface IconProps {
-    // Use a more specific type that doesn't cause an intersection
-    as?: any; // This is a temporary fix to bypass the type checking
+    as: any; // Using any to bypass the type checking
   }
 } 

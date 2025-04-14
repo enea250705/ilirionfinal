@@ -1,3 +1,11 @@
+// This is a server component
+export default function Page() {
+  return (
+    <ClientPage />
+  );
+}
+
+// All client-side code is moved to this component
 'use client';
 /*eslint-disable*/
 // @ts-ignore - Disable type checking for icon types in this file
@@ -26,11 +34,6 @@ import { useEffect, useState, useRef } from 'react';
 import { MdAutoAwesome, MdBolt, MdEdit, MdPerson, MdMenu, MdClose } from 'react-icons/md';
 // Import the original background image as a fallback
 import Bg from '../public/img/chat/bg-image.png';
-// Import Markdown components dynamically to fix CommonJS/ESModule conflicts
-import dynamic from 'next/dynamic';
-// @ts-ignore - Import remark-gfm directly with ts-ignore
-import remarkGfm from 'remark-gfm';
-const ReactMarkdown = dynamic(() => import('react-markdown'), { ssr: false });
 // Import trending topic type
 import type { TrendingTopic } from '@/types/types';
 
@@ -118,8 +121,7 @@ const questionNeedsResearch = (text: string): boolean => {
   return factualPatterns.some(pattern => pattern.test(text));
 };
 
-// Export a simple server component as the default export
-export default function Page() {
+function ClientPage() {
   return (
     <ChatComponent apiKeyApp="" />
   );
@@ -1176,51 +1178,7 @@ function ChatComponent(props: { apiKeyApp: string }) {
               />
             </Flex>
                       <Box maxW="90%" w="100%">
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            p: ({ node, ...props }) => (
-                              <Text
-                                color={textColor}
-                                fontWeight="500"
-                                fontSize={{ base: 'sm', md: 'md' }}
-                                lineHeight={{ base: '18px', md: '22px' }}
-                                mb="8px"
-                                {...props}
-                              />
-                            ),
-                            strong: ({ node, ...props }) => (
-                              <Text as="span" fontWeight="700" {...props} />
-                            ),
-                            em: ({ node, ...props }) => (
-                              <Text as="span" fontStyle="italic" {...props} />
-                            ),
-                            code: ({ node, inline, ...props }) => (
-                              inline ? 
-                                <Text 
-                                  as="code"
-                                  bg={useColorModeValue('gray.100', 'gray.700')}
-                                  p="2px"
-                                  borderRadius="4px"
-                                  fontFamily="monospace"
-                                  {...props}
-                                /> : 
-                                <Box
-                                  as="pre" 
-                                  bg={useColorModeValue('gray.100', 'gray.700')}
-                                  p="10px"
-                                  borderRadius="8px"
-                                  overflowX="auto"
-                                  fontFamily="monospace"
-                                  fontSize="sm"
-                                  my="8px"
-                                  {...props}
-                                />
-                            ),
-                          }}
-                        >
-                          {message.content}
-                        </ReactMarkdown>
+                        {formatMarkdown(message.content)}
                       </Box>
           </Flex>
                   )
@@ -1272,51 +1230,7 @@ function ChatComponent(props: { apiKeyApp: string }) {
               />
             </Flex>
                   <Box maxW="90%" w="100%">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        p: ({ node, ...props }) => (
-                          <Text
-                            color={textColor}
-                            fontWeight="500"
-                            fontSize={{ base: 'sm', md: 'md' }}
-                            lineHeight={{ base: '18px', md: '22px' }}
-                            mb="8px"
-                            {...props}
-                          />
-                        ),
-                        strong: ({ node, ...props }) => (
-                          <Text as="span" fontWeight="700" {...props} />
-                        ),
-                        em: ({ node, ...props }) => (
-                          <Text as="span" fontStyle="italic" {...props} />
-                        ),
-                        code: ({ node, inline, ...props }) => (
-                          inline ? 
-                            <Text 
-                              as="code"
-                              bg={useColorModeValue('gray.100', 'gray.700')}
-                              p="2px"
-                              borderRadius="4px"
-                              fontFamily="monospace"
-                              {...props}
-                            /> : 
-                            <Box
-                              as="pre" 
-                              bg={useColorModeValue('gray.100', 'gray.700')}
-                              p="10px"
-                              borderRadius="8px"
-                              overflowX="auto"
-                              fontFamily="monospace"
-                              fontSize="sm"
-                              my="8px"
-                              {...props}
-                            />
-                        ),
-                      }}
-                    >
-                      {outputCode}
-                    </ReactMarkdown>
+                    {formatMarkdown(outputCode)}
                   </Box>
           </Flex>
               )}
@@ -1414,5 +1328,42 @@ function ChatComponent(props: { apiKeyApp: string }) {
         )}
       </Flex>
     </Flex>
+  );
+}
+
+// Add a simple markdown formatter function instead
+function formatMarkdown(text: string) {
+  // For React, we need to use dangerouslySetInnerHTML to render HTML
+  const markdownToHtml = () => {
+    // Basic markdown formatting for plain text
+    // Bold
+    let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Italic
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    // Code blocks
+    formatted = formatted.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+    // Inline code
+    formatted = formatted.replace(/`([^`]+)`/g, '<code>$1</code>');
+    // Links
+    formatted = formatted.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    // Lists
+    formatted = formatted.replace(/^\s*-\s+(.*?)$/gm, '<li>$1</li>');
+    // Line breaks
+    formatted = formatted.replace(/\n/g, '<br />');
+    
+    return formatted;
+  };
+  
+  // Return a JSX element with dangerouslySetInnerHTML
+  return (
+    <div 
+      dangerouslySetInnerHTML={{ __html: markdownToHtml() }} 
+      style={{ 
+        color: 'inherit',
+        fontSize: 'inherit',
+        lineHeight: 'inherit', 
+        fontWeight: 'inherit' 
+      }}
+    />
   );
 }

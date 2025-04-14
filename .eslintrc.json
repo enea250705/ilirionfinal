@@ -1,7 +1,6 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "react/no-unescaped-entities": ["error", { "forbid": [">", "}"] }],
-    "@next/next/no-html-link-for-pages": ["error", "./app"]
+    "react/no-unescaped-entities": ["error", { "forbid": [">", "}"] }]
   }
 }
